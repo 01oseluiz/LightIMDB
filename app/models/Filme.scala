@@ -17,7 +17,7 @@ import javax.inject.Singleton
  * a uma entidade cujo estado deve ser salvo no 
  * banco de dados. 
  */
-case class Filme(id: Int, titulo: String, diretor: String, anoProducao: Int) 
+case class Filme(id: Int, titulo: String, diretor: String, anoProducao: Int)
 
 /**
  * Um DAO para a classe de entidade Filme. 
