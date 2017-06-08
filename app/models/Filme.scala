@@ -1,16 +1,11 @@
 package models
 
 import anorm.SQL
-import anorm.SqlQuery
 import anorm.RowParser
 import anorm.Macro
 import anorm.SqlStringInterpolation
-import anorm.SqlParser
-import play.api.db.DB
-import play.api.Play.current
 import javax.inject.Inject
 import play.api.db.Database
-import javax.inject.Singleton
 
 /**
  * A definicao da classe Filme, que corresponde 
