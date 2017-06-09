@@ -34,7 +34,7 @@ class TrabalhoArtisticoDAO @Inject() (database: Database) {
   }
 
   def listar = database.withConnection { implicit connection =>
-    SQL"SELECT * FROM TB_FILME".as(parser.*)
+    SQL"SELECT TB_TIPO_id AS tipo, titulo, autor, genero, ano, origem, descricao FROM TB_FILME".as(parser.*)
   }
 
 }
