@@ -15,7 +15,7 @@ case class Avaliacao (id: Int, id_usuario: Int, id_trabalho: Int, nota: Int) {
 
 }
 
-class TrabalhoArtisticoDAO @Inject() (database: Database) {
+class AvaliacaoDAO @Inject() (database: Database) {
   val parser: RowParser[models.Avaliacao] = Macro.namedParser[models.Avaliacao]
 
   def salvar(review: Avaliacao) = database.withConnection { implicit connection =>
