@@ -1,0 +1,14 @@
+@(userForm: Form[UsuarioVO])(implicit messages: Messages)
+
+@main("Novo Usuario") {
+    @helper.form(action = routes.UsuarioController.cadastroSubmissao()) {
+        @helper.inputText(userForm("Email"))
+        @helper.inputPassword(userForm("Senha"))
+
+        <div class="form-actions">
+            <button class="btn waves-effect waves-light" type="submit">Cadastrar
+                <i class="material-icons right"></i>
+            </button>
+        </div>
+    }
+}

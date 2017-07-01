@@ -1,8 +1,9 @@
-@()
+@(message: String)
 
-@main("IMDB rocks on Play :)") {
-  <h1>Bem vindo ao (pseudo) sistema IMDB!</h1>
-  <a href="@routes.FilmeController.listar()" class="btn" role="button">Listar</a><br/>
-  <a href="@routes.FilmeController.novoFilme()" class="btn">Adicionar</a><br/>
-  <a href="@routes.FilmeController.novoFilmeSubmissao()" class="btn">Sei lá</a><br/>
+@main("Welcome to IMDB :)") {
+  <h1>Bem vindo ao IMDB!</h1>
+
+    <a href="@routes.UsuarioController.login()"><button type="submit">Login/Cadastro</button></a>
+    <a href="@routes.UsuarioController.logout()"><button type="submit">Sair</button></a>
+    <p>@Login.login</p>
 }

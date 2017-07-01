@@ -1,0 +1,9 @@
+@(filmes: List[Filme])
+
+@main("IMDB") {
+    <ul>
+    @for(filme <- filmes) {
+        <li>@filme.titulo - @filme.diretor - @filme.ano -@filme.duracao - @filme.origem - @filme.sinopse</li>
+    }
+    </ul>
+}

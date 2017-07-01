@@ -1,0 +1,16 @@
+@(userForm: Form[UsuarioVO])(implicit messages: Messages)
+
+@main("Novo Usuario") {
+    @helper.form(action = routes.UsuarioController.loginAut()) {
+        @helper.inputText(userForm("Usuario"))
+        @helper.inputPassword(userForm("Senha"))
+
+        <div class="form-actions">
+            <button class="btn waves-effect waves-light" type="submit">Login
+                <i class="material-icons right"></i>
+            </button>
+        </div>
+    }
+    <a class="waves-effect waves-light btn" href="@routes.UsuarioController.cadastro">Cadastrar</a>
+}
+

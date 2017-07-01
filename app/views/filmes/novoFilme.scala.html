@@ -1,0 +1,16 @@
+@(filmeForm: Form[FilmeVO])(implicit messages: Messages)
+
+@main("Novo filme") {
+    @helper.form(action = routes.FilmeController.novoFilmeSubmissao()) {
+        @helper.inputText(filmeForm("Titulo"))
+        @helper.inputText(filmeForm("Diretor"))
+        @helper.inputText(filmeForm("Ano"))
+        @helper.inputText(filmeForm("Duracao"))
+        @helper.inputText(filmeForm("Sinopse"))
+        @helper.inputText(filmeForm("Origem"))
+        <div class="form-actions">
+            <button type="submit">Cadastrar novo filme</button>
+        </div>
+    }
+
+}
