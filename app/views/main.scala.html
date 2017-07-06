@@ -4,24 +4,95 @@
  * two arguments, a `String` for the title of the page and an `Html`
  * object to insert into the body of the page.
  *@
-@(title: String)(content: Html)
+@(title: String, message: String, kind: Int)(content: Html)
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         @* Here's where we render the page title `String`. *@
         <title>@title</title>
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.min.css")">
+        <script src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.min.js")" crossorigin="anonymous"></script>
+
+        <!--meta name="viewport" content="width=device-width, initial-scale=1"-->
+
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.min.css")">
-<script src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.min.js")" crossorigin="anonymous"></script>
+
+
 
     </head>
     <body>
-        @* And here's where we render the `Html` object containing
-         * the page content. *@
-        @content
 
-      <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+        <!--Navbar-->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="@routes.HomeController.index()">
+                        <img id="logo" src="@routes.Assets.versioned("images/LightIMDB_256.png")">
+                    </a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="@routes.FilmeController.listar()">Filmes</a></li>
+                    <li><a href="@routes.FilmeController.novoFilme()">Novo Filme</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                @if(Login.id == 0){
+                        <li><a href="@routes.UsuarioController.cadastro()"><span class="glyphicon glyphicon-user"></span> Cadastrar</a></li>
+                        <li><a href="@routes.UsuarioController.login()"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                } else {
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> @Login.email</a></li>
+                    <li><a href="@routes.UsuarioController.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                }
+                </ul>
+            </div>
+        </nav>
+
+        <!--Conteúdo-->
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <!--Warnings-->
+                    @if(message != ""){
+                        @kind match{
+                            case 0 => {
+                                <div class="alert alert-success">
+                                    @message
+                                </div>
+                            }
+                            case 1 => {
+                                <div class="alert alert-info">
+                                    @message
+                                </div>
+                            }
+                            case 2 => {
+                                <div class="alert alert-warning">
+                                    @message
+                                </div>
+                            }
+                            case 3 => {
+                                <div class="alert alert-danger">
+                                    @message
+                                </div>
+                            }
+                            case _ => {
+                                <div class="alert alert-info">
+                                    @message
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            @content
+        </div>
+
+        <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        </script>
+        <script src="@routes.Assets.versioned("javascripts/jquery-1.9.0.min.js")"></script>
     </body>
 </html>

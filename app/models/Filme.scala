@@ -27,4 +27,8 @@ class FilmeDAO @Inject() (database: Database) {
   def listar = database.withConnection { implicit connection =>
     SQL"SELECT * FROM FILMES".as(parser.*)
   }
+
+  def getById(id: Long) = database.withConnection { implicit connection =>
+    SQL"SELECT * FROM FILMES WHERE id=$id".as(parser.*)
+  }
 }

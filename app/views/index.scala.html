@@ -1,9 +1,10 @@
-@(message: String)
+@(message: String, kind: Int)
 
-@main("Welcome to IMDB :)") {
-  <h1>Bem vindo ao IMDB!</h1>
-
-    <a href="@routes.UsuarioController.login()"><button type="submit">Login/Cadastro</button></a>
-    <a href="@routes.UsuarioController.logout()"><button type="submit">Sair</button></a>
-    <p>@Login.login</p>
+@main("Light IMDB", message, kind) {
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Bem vindo ao Light IMDB!</h1>
+    </div>
+  </div>
 }
+

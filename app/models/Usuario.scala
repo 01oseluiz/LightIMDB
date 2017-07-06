@@ -49,8 +49,12 @@ class UsuarioDAO @Inject() (database: Database){
   }
 
   def autenticar(email: String, senha: String): List[Usuario] = database.withConnection{ implicit connection =>
-    SQL("SELECT * FROM USUARIO WHERE email = '{useremail}' AND senha = '{usersenha}';")
-      .on('useremail -> email, 'usersenha ->senha).as(parser.*)
+    SQL(
+      """SELECT * FROM USUARIO
+        |WHERE email = {useremail} AND senha = {usersenha};""".stripMargin)
+      .on('useremail -> email,
+        'usersenha ->senha)
+      .as(parser.*)
   }
 
   def listar = database.withConnection { implicit connection =>

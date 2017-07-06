@@ -1,17 +1,19 @@
 package controllers
 
 import play.api.mvc._
-import models.Filme
-import models.FilmeDAO
+import models._
 import javax.inject.Inject
+
 import play.api.data._
 import play.api.data.Forms._
 import javax.inject.Singleton
+
 import play.api.i18n.I18nSupport
 import play.api.i18n.MessagesApi
 
 @Singleton()
-class FilmeController @Inject()(dao: FilmeDAO, val messagesApi: MessagesApi) extends Controller with I18nSupport {
+class FilmeController @Inject()(dao: FilmeDAO, daoAval: AvaliacaoDAO, val messagesApi: MessagesApi) extends Controller with I18nSupport {
+
   def listar = Action {
     var filmes = dao.listar
     Ok(views.html.filmes.listagem(filmes))
@@ -33,6 +35,33 @@ class FilmeController @Inject()(dao: FilmeDAO, val messagesApi: MessagesApi) ext
         Created(views.html.filmes.listagem(filmes))
       }
     )
+  }
+
+  def visualizarFilme(id: Long) = Action {
+    val resultado = dao.getById(id)
+    if(resultado.nonEmpty){
+      val filme = resultado(0)
+      val aval = daoAval.getAvaliacaoByFilmeId(id)
+      val avalUser = daoAval.getAvaliacaoByUserEFilme(Login.id, id)
+      val quant = daoAval.getQuantAvaliacoesByFilmeId(id)
+      Ok(views.html.filmes.filmeExib(filme,aval, quant, avalUser))
+    } else {
+      Ok(views.html.index("",0))
+    }
+  }
+
+  def getAvaliacao(id: Long): Double = {
+    daoAval.getAvaliacaoByFilmeId(id)
+  }
+
+  def avaliarFilme(id: Long, nota: Int) = Action {
+    if(Login.id != 0){
+      val aval = Avaliacao(0, Login.id, id.toInt, nota)
+      daoAval.avaliar(aval)
+      Ok(views.html.index("Filme avaliado com Sucesso!", 0))
+    } else {
+      Ok(views.html.index("Você não está logado! Filme não avaliado.", 2))
+    }
   }
 
   val filmeForm = Form(

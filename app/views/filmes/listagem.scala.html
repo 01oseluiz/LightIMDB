@@ -1,9 +1,30 @@
 @(filmes: List[Filme])
 
-@main("IMDB") {
-    <ul>
-    @for(filme <- filmes) {
-        <li>@filme.titulo - @filme.diretor - @filme.ano -@filme.duracao - @filme.origem - @filme.sinopse</li>
-    }
-    </ul>
+@main("Light IMDB", "", 0) {
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td class="col-xs-10">Título</td>
+                        <td class="col-xs-1">Ano</td>
+                        <td class="col-xs-1">Ver</td>
+                    </tr>
+                </thead>
+                @for(filme <- filmes) {
+                    <tr>
+                        <td class="col-xs-10">@filme.titulo</td>
+                        <td class="col-xs-1">@filme.ano</td>
+                        <td class="col-xs-1">
+                            <a href="@routes.FilmeController.visualizarFilme(filme.id)">
+                                <button class="btn waves-effect waves-light">Ver</button>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
 }
