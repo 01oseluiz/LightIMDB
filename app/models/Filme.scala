@@ -1,41 +1,34 @@
 package models
 
 import anorm.SQL
-import anorm.SqlQuery
 import anorm.RowParser
 import anorm.Macro
 import anorm.SqlStringInterpolation
-import anorm.SqlParser
-import play.api.db.DB
-import play.api.Play.current
 import javax.inject.Inject
 import play.api.db.Database
-import javax.inject.Singleton
 
-/**
- * A definicao da classe Filme, que corresponde 
- * a uma entidade cujo estado deve ser salvo no 
- * banco de dados. 
- */
-case class Filme(id: Int, titulo: String, diretor: String, anoProducao: Int)
+case class Filme(id: Int, titulo: String, diretor: String, ano: Int, duracao: Int, sinopse: String, origem: String)
 
-/**
- * Um DAO para a classe de entidade Filme. 
- */
-class FilmeDAO @Inject() (database: Database){
-  val parser : RowParser[models.Filme] = Macro.namedParser[models.Filme]
-  
-  def salvar(filme: Filme) = database.withConnection { implicit connection => 
+class FilmeDAO @Inject() (database: Database) {
+  val parser: RowParser[models.Filme] = Macro.namedParser[models.Filme]
+
+  def salvar(filme: Filme) = database.withConnection { implicit connection =>
     val id: Option[Long] = SQL(
-        """INSERT INTO TB_FILME(TITULO, DIRETOR, ANO_PRODUCAO) 
-            values ({titulo}, {diretor}, {anoProducao})""")
-     .on('titulo -> filme.titulo, 
-         'diretor -> filme.diretor, 
-         'anoProducao -> filme.anoProducao).executeInsert()
-  }
-  
-  def listar = database.withConnection { implicit connection => 
-    SQL"SELECT ID, TITULO, DIRETOR, ANO_PRODUCAO AS anoProducao FROM TB_FILME".as(parser.*)
+      """INSERT INTO FILMES(titulo, diretor, ano, duracao, sinopse, origem)
+            values ({titulo}, {diretor}, {ano}, {duracao}, {sinopse}, {origem})""")
+      .on('titulo -> filme.titulo,
+        'diretor -> filme.diretor,
+        'ano -> filme.ano,
+        'duracao -> filme.duracao,
+        'sinopse -> filme.sinopse,
+        'origem -> filme.origem).executeInsert()
   }
 
+  def listar = database.withConnection { implicit connection =>
+    SQL"SELECT * FROM FILMES".as(parser.*)
+  }
+
+  def getById(id: Long) = database.withConnection { implicit connection =>
+    SQL"SELECT * FROM FILMES WHERE id=$id".as(parser.*)
+  }
 }

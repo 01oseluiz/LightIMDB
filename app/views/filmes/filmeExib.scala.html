@@ -1,0 +1,73 @@
+@(filme: Filme, avaliacao: Double, quant: Int, avalUser: Option[Int])
+
+@main(filme.titulo + " (" +filme.ano + ")", "", 0){
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class=" col-md-8 well">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>@filme.titulo (@filme.ano)</h1>
+                    <h4>Diretor: @filme.diretor</h4>
+                    <h6>Nota:
+                        @for(i <- 1 to avaliacao.round.toInt){
+                            <span class="glyphicon glyphicon-star"></span>
+                        }
+                        @for(i <- avaliacao.round.toInt to 4){
+                            <span class="glyphicon glyphicon-star gray"></span>
+                        }
+                        @{(avaliacao*10).round.toDouble/10} (@quant avaliações) </h6>
+                    <br/>
+                    <p><strong>Sinopse:</strong></p>
+                    <p>@filme.sinopse</p>
+                    <br/>
+                    <p><strong>Duração:</strong>
+                        @{filme.duracao/60}h@{
+                            val min = filme.duracao%60
+                            f"$min%02d"
+                        }
+                    </p>
+                    <p><strong>Origem:</strong> @filme.origem</p>
+                </div>
+                <div class="col-md-6">
+                    <h3><strong>Avaliar:</strong></h3>
+                    <a href="@routes.FilmeController.avaliarFilme(filme.id, 0)">
+                        <button class="btn btn-xs waves-effect waves-light">0</button></a>
+                    @for(i <- 1 to 5){
+                        <a href="@routes.FilmeController.avaliarFilme(filme.id, i)">
+                            <span class="glyphicon glyphicon-star yellow" data-toggle="tooltip" title="@i"></span></a>
+                    }
+
+                    <br/><br/>
+
+                    <h3><strong>Sua Avaliação:</strong></h3>
+                    @{
+                        avalUser match{
+                            case Some(a) => {
+                                var resultado = ""
+                                for(i <- 1 to a){
+                                    resultado += <span class="glyphicon glyphicon-star"></span>
+                                }
+                                for(i <- a to 4){
+                                    resultado += <span class="glyphicon glyphicon-star gray"></span>
+                                }
+                                Html(resultado)
+                            }
+                            case None => <p>Você ainda não avaliou este filme ou não está logado</p>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 well">
+            <ul class="pager">
+                <li class="previous"><a href="@routes.FilmeController.visualizarFilme(filme.id-1)">Anterior</a></li>
+                <li class="next"><a href="@routes.FilmeController.visualizarFilme(filme.id+1)">Próximo</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+}

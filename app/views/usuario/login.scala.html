@@ -1,0 +1,30 @@
+@(userForm: Form[UsuarioVO], message: String, kind: Int)(implicit messages: Messages)
+
+@main("Light IMDB", message, kind) {
+    <div class="row text-center">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h1>Login</h1>
+        </div>
+    </div>
+    <div class="row text-center">
+
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+        @helper.form(action = routes.UsuarioController.loginAut) {
+            @helper.inputText(userForm("Email"))
+            @helper.inputPassword(userForm("Senha"))
+
+            <div class="form-actions">
+                <button class="btn waves-effect waves-light" type="submit">Login
+                    <i class="material-icons right"></i>
+                </button>
+
+            </div>
+        }
+        </div>
+
+    </div>
+
+}
+

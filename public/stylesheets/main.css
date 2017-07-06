@@ -1,0 +1,25 @@
+.gray{
+    color: #999999;
+}
+
+.yellow{
+    color: #DDDD00;
+}
+.yellow:hover{
+    color: #FFFF00;
+}
+
+#logo{
+    height: 32px;
+    width: 66px;
+    margin: 10%;
+}
+
+.navbar-brand {
+    padding: 0px;
+    padding-top: 0px;
+}
+.navbar-brand>img {
+    height: 100%;
+    width: auto;
+}
