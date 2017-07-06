@@ -1,3 +1,4 @@
+USE imdb;
 # --Inserts USUARIO--
 INSERT INTO USUARIO(email, senha) VALUES('victoragcosta@hotmail.com', '12345678');
 INSERT INTO USUARIO(email, senha) VALUES('suamae@hotmail.com', '12345678');
@@ -16,7 +17,7 @@ INSERT INTO FILMES(titulo, diretor, ano, duracao, sinopse, origem) VALUES(
   'La La Land',
   'Damien Chazelle',
   2016,
-  111,
+  128,
   'Two proper L.A. dreamers, a suavely charming soft-spoken jazz pianist and a brilliant vivacious playwright, while waiting for their big break, attempt to reconcile aspirations and relationship in a magical old-school romance.',
   'USA'
 );

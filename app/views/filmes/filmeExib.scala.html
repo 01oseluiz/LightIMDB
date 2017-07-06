@@ -22,7 +22,7 @@
                     <br/>
                     <p><strong>Duração:</strong>
                         @{filme.duracao/60}h@{
-                            val min = filme.duracao-filme.duracao/60
+                            val min = filme.duracao%60
                             f"$min%02d"
                         }
                     </p>
